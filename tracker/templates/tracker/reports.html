@@ -1,0 +1,42 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Reports - Education Performance Tracker{% endblock %}
+
+{% block extra_style %}
+<style>
+    .report-section {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+    }
+    .report-section h3 {
+        color: #667eea;
+        margin-bottom: 20px;
+    }
+    .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Performance Reports</h2>
+
+<div class="report-section">
+    <h3>Subject-wise Performance</h3>
+    {{ subject_chart|safe }}
+</div>
+
+<div class="report-section">
+    <h3>Term-wise Analysis</h3>
+    {{ term_chart|safe }}
+</div>
+
+<div class="report-section">
+    <h3>Attendance vs Performance</h3>
+    {{ scatter_chart|safe }}
+</div>
+{% endblock %}

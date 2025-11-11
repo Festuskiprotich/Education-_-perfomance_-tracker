@@ -1,0 +1,87 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Uploaded Files - Education Performance Tracker{% endblock %}
+
+{% block extra_style %}
+<style>
+    .files-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .file-card {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 20px;
+        transition: all 0.3s;
+    }
+    .file-card:hover {
+        border-color: #667eea;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+    .file-card h3 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+        word-break: break-all;
+    }
+    .file-info {
+        color: #6c757d;
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+    .file-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .btn-small {
+        padding: 8px 16px;
+        font-size: 14px;
+        flex: 1;
+    }
+    .btn-view {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .btn-delete {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+    }
+    .empty-state h3 {
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Uploaded CSV Files</h2>
+
+{% if files %}
+    <div class="files-grid">
+        {% for file in files %}
+        <div class="file-card">
+            <h3><i class="fas fa-file-csv"></i> {{ file.name }}</h3>
+            <div class="file-info">
+                <p>Size: {{ file.size|filesizeformat }}</p>
+                <p>Uploaded: {{ file.date }}</p>
+            </div>
+            <div class="file-actions">
+                <a href="/files/view/{{ file.name }}" class="btn btn-small btn-view">View</a>
+                <a href="/files/delete/{{ file.name }}" class="btn btn-small btn-delete" onclick="return confirm('Delete this file?')">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <h3>No files uploaded yet</h3>
+        <p>Upload a CSV file to get started</p>
+        <a href="/upload/" class="btn" style="margin-top: 20px;">Upload File</a>
+    </div>
+{% endif %}
+{% endblock %}

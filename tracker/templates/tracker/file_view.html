@@ -1,0 +1,111 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}View File - {{ filename }}{% endblock %}
+
+{% block extra_style %}
+<style>
+    .file-header {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .file-header h2 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        overflow-x: auto;
+        display: block;
+    }
+    .data-table table {
+        width: 100%;
+        min-width: 600px;
+    }
+    .data-table th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        position: sticky;
+        top: 0;
+    }
+    .data-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .data-table tr:hover {
+        background: #f8f9fa;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    .stat-box {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+    .stat-box h4 {
+        color: #6c757d;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+    .stat-box .value {
+        color: #667eea;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .chart-section {
+        margin-top: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="file-header">
+    <h2><i class="fas fa-file-csv"></i> {{ filename }}</h2>
+    <p>Total Records: {{ total_records }}</p>
+</div>
+
+<h3>Data Summary</h3>
+<div class="stats-grid">
+    <div class="stat-box">
+        <h4>Total Records</h4>
+        <div class="value">{{ total_records }}</div>
+    </div>
+    <div class="stat-box">
+        <h4>Unique Students</h4>
+        <div class="value">{{ unique_students }}</div>
+    </div>
+    <div class="stat-box">
+        <h4>Subjects</h4>
+        <div class="value">{{ unique_subjects }}</div>
+    </div>
+    <div class="stat-box">
+        <h4>Average Score</h4>
+        <div class="value">{{ avg_score|floatformat:1 }}%</div>
+    </div>
+</div>
+
+<div class="chart-section">
+    <h3>Visualizations</h3>
+    {{ charts|safe }}
+</div>
+
+<h3>Data Preview (First 50 rows)</h3>
+<div class="data-table">
+    {{ table_html|safe }}
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="/files/" class="btn">Back to Files</a>
+</div>
+{% endblock %}

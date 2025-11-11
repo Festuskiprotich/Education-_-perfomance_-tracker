@@ -1,0 +1,63 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Dashboard - Education Performance Tracker{% endblock %}
+
+{% block extra_style %}
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .stat-card h3 {
+        font-size: 1em;
+        margin-bottom: 10px;
+        opacity: 0.9;
+    }
+    .stat-card .number {
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+    .chart-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Performance Overview</h2>
+<div class="dashboard-grid">
+    <div class="stat-card">
+        <h3>Total Students</h3>
+        <div class="number">{{ total_students }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Total Records</h3>
+        <div class="number">{{ total_records }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Average Score</h3>
+        <div class="number">{{ avg_score|floatformat:1 }}%</div>
+    </div>
+    <div class="stat-card">
+        <h3>Avg Attendance</h3>
+        <div class="number">{{ avg_attendance|floatformat:1 }}%</div>
+    </div>
+</div>
+
+<div class="chart-container">
+    <h3>Subject Performance Analysis</h3>
+    {{ chart|safe }}
+</div>
+{% endblock %}

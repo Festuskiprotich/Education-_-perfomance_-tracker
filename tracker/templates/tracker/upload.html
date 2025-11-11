@@ -1,0 +1,90 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Upload Data - Education Performance Tracker{% endblock %}
+
+{% block extra_style %}
+<style>
+    .upload-form {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .upload-form h2 {
+        margin-bottom: 20px;
+        color: #667eea;
+    }
+    .upload-form form p {
+        margin-bottom: 20px;
+    }
+    .upload-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #495057;
+    }
+    .upload-form input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 2px dashed #667eea;
+        border-radius: 5px;
+        background: white;
+    }
+    .upload-form button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .info-box {
+        background: #e7f3ff;
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+    .info-box h4 {
+        margin-bottom: 10px;
+        color: #667eea;
+    }
+    .info-box ul {
+        margin-left: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="upload-form">
+    <h2>Upload Student Performance Data</h2>
+    
+    <div class="info-box">
+        <h4>CSV Format Requirements:</h4>
+        <ul>
+            <li>student - Student name</li>
+            <li>subject - Subject name</li>
+            <li>score - Score (0-100)</li>
+            <li>attendance - Attendance percentage</li>
+            <li>term - Academic term</li>
+            <li>date_recorded - Date (YYYY-MM-DD)</li>
+        </ul>
+    </div>
+
+    {% if msg %}
+        <div class="message {% if 'success' in msg %}success{% else %}error{% endif %}">
+            {{ msg }}
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Upload File</button>
+    </form>
+</div>
+
+{% if chart %}
+    <div style="margin-top: 30px;">
+        <h3>Preview:</h3>
+        {{ chart|safe }}
+    </div>
+{% endif %}
+{% endblock %}
